@@ -1,30 +1,34 @@
-// Function to add a task
-function addTask() {
-    let taskInput = document.getElementById("taskInput");
-    let taskText = taskInput.value.trim();
+// Image array with working example images
+const images = [
+    "https://picsum.photos/500/300?random=1",
+    "https://picsum.photos/500/300?random=2",
+    "https://picsum.photos/500/300?random=3",
+    "https://picsum.photos/500/300?random=4"
+];
 
-    if (taskText === "") {
-        alert("Please enter a task!");
-        return;
-    }
+let currentIndex = 0;
+const sliderImage = document.getElementById("sliderImage");
+const prevBtn = document.getElementById("prevBtn");
+const nextBtn = document.getElementById("nextBtn");
 
-    let taskList = document.getElementById("taskList");
-
-    // Create list item
-    let li = document.createElement("li");
-    li.textContent = taskText;
-
-    // Create remove button
-    let removeBtn = document.createElement("button");
-    removeBtn.textContent = "Remove";
-    removeBtn.classList.add("remove-btn");
-    removeBtn.onclick = function () {
-        taskList.removeChild(li);
-    };
-
-    li.appendChild(removeBtn);
-    taskList.appendChild(li);
-
-    // Clear input field
-    taskInput.value = "";
+// Function to update image
+function updateImage() {
+    sliderImage.src = images[currentIndex];
 }
+
+// ✅ Set initial image after DOM loads
+document.addEventListener("DOMContentLoaded", () => {
+    updateImage();
+});
+
+// Next button event
+nextBtn.addEventListener("click", () => {
+    currentIndex = (currentIndex + 1) % images.length;
+    updateImage();
+});
+
+// Previous button event
+prevBtn.addEventListener("click", () => {
+    currentIndex = (currentIndex - 1 + images.length) % images.length;
+    updateImage();
+});
